@@ -38,8 +38,8 @@ public class UIPnlLog : MonoBehaviour
 	void Start()
     {
 		this.gameList = new GameVariableLoopList(this.gameObject, this.LoopList).SetItemType(typeof(Item)).SetTemplateIndexFunc(this.GetTemplateIndex);
-	    gameList.SetListNum(0);
-		//this.gameList.SetListNum(100, 99);
+	    //gameList.SetListNum(0);
+		this.gameList.SetListNum(100, 99);
 
 	}
 

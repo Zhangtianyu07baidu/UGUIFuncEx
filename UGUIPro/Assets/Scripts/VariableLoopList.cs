@@ -441,7 +441,15 @@ namespace Engine.UI
 				if (!this.sizeDic.TryGetValue(this.maxIndex, out float size))
 				{
 					yield return null;
-					size = transform.rect.height;
+					TemplateSize sizer = transform.GetComponent<TemplateSize>();
+					if (sizer != null)
+					{
+						size = sizer.GetMaxHeight();
+					}
+					else
+					{
+						size = transform.rect.height;
+					}
 					this.contentSize -= DEFAULT_SIZE_F;
 					this.contentSize += size;
 					this.sizeDic[this.maxIndex] = size;
@@ -498,7 +506,15 @@ namespace Engine.UI
 				if (!this.sizeDic.TryGetValue(this.minIndex, out float size))
 				{
 					yield return null;
-					size = transform.rect.height;
+					TemplateSize sizer = transform.GetComponent<TemplateSize>();
+					if (sizer != null)
+					{
+						size = sizer.GetMaxHeight();
+					}
+					else
+					{
+						size = transform.rect.height;
+					}
 					delta = size - DEFAULT_SIZE_F;
 					this.contentSize += delta;
 					this.sizeDic[this.minIndex] = size;
