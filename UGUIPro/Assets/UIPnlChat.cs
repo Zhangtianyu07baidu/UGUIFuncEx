@@ -75,7 +75,8 @@ public class UIPnlChat : MonoBehaviour
 		GUILayout.BeginVertical();
 		if (GUILayout.Button("Click Test"))
 		{
-			this.LoopList.RefreshList();
+			//this.LoopList.RefreshList();
+			this.LoopList.SetDataList(this.datas.Count, this.datas.Count - 1);
 		}
 
 		GUILayout.EndVertical();

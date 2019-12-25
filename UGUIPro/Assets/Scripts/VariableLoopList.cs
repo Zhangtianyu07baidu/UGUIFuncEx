@@ -299,7 +299,7 @@ namespace Engine.UI
 		private bool IsOutofViewTop(RectTransform transform)
 		{
 			float contentY = this.ContentRect.anchoredPosition.y;
-			float targetBottomY = transform.anchoredPosition.y - transform.rect.height;
+			float targetBottomY = transform.anchoredPosition.y - this.GetTemplateHeight(transform);
 			return -targetBottomY - contentY < 0;
 		}
 
@@ -316,7 +316,7 @@ namespace Engine.UI
 		private bool CanTouchViewBottom(RectTransform transform)
 		{
 			float contentY = this.ContentRect.anchoredPosition.y;
-			float targetBottomY = transform.anchoredPosition.y - transform.rect.height;
+			float targetBottomY = transform.anchoredPosition.y - this.GetTemplateHeight(transform);
 			return -targetBottomY - contentY > this.viewSize.y;
 		}
 
@@ -441,15 +441,7 @@ namespace Engine.UI
 				if (!this.sizeDic.TryGetValue(this.maxIndex, out float size))
 				{
 					yield return null;
-					TemplateSize sizer = transform.GetComponent<TemplateSize>();
-					if (sizer != null)
-					{
-						size = sizer.GetMaxHeight();
-					}
-					else
-					{
-						size = transform.rect.height;
-					}
+					size = this.GetTemplateHeight(transform);
 					this.contentSize -= DEFAULT_SIZE_F;
 					this.contentSize += size;
 					this.sizeDic[this.maxIndex] = size;
@@ -506,15 +498,7 @@ namespace Engine.UI
 				if (!this.sizeDic.TryGetValue(this.minIndex, out float size))
 				{
 					yield return null;
-					TemplateSize sizer = transform.GetComponent<TemplateSize>();
-					if (sizer != null)
-					{
-						size = sizer.GetMaxHeight();
-					}
-					else
-					{
-						size = transform.rect.height;
-					}
+					size = this.GetTemplateHeight(transform);
 					delta = size - DEFAULT_SIZE_F;
 					this.contentSize += delta;
 					this.sizeDic[this.minIndex] = size;
@@ -563,6 +547,12 @@ namespace Engine.UI
 		private void OnUpdateItemByIndex(RectTransform transform, int index)
 		{
 			this.OnUpdateItemEvent?.Invoke(transform.gameObject, index);
+		}
+
+		private float GetTemplateHeight(RectTransform transform)
+		{
+			TemplateSize sizer = transform.GetComponent<TemplateSize>();
+			return sizer?.GetMaxHeight() ?? transform.rect.height;
 		}
 	}
 }
