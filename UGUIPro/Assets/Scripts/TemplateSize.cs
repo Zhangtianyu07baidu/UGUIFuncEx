@@ -25,4 +25,21 @@ public class TemplateSize : MonoBehaviour
 
 		return height;
 	}
+
+	public float GetMaxWidth()
+	{
+		RectTransform rectTransform = this.transform as RectTransform;
+		float width = rectTransform.rect.width;
+
+		if (this.Transforms != null)
+		{
+			for (int i = 0; i < this.Transforms.Count; i++)
+			{
+				var item = this.Transforms[i];
+				width = Math.Max(width, item.rect.width);
+			}
+		}
+
+		return width;
+	}
 }
